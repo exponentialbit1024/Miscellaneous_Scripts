@@ -28,7 +28,7 @@ if(isset($_POST['choice1']) && isset($_POST['choice2'])
 	$emailf = "\"".$email."\"";
 	$titlef = "\"".$title."\"";
 
-	$conn = new mysqli('127.12.108.130:3306', 'adminZsLC8b2', 'hFZKSTM-FKHC', 'rapidqs');
+	$conn = new mysqli('IP:PORT_OF_DB', 'username', 'password', 'dbname');
 	if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
 	}
