@@ -27,4 +27,6 @@ htmlwl = respwl.text
 soupwl = BeautifulSoup(htmlwl, "lxml")
 wspans = soupwl.find_all('span', class_="cond")
 curw = wspans[0].text
-print(curw)
+
+print("It is "+curw+" outside")
+print("The current temperature outside is "+str(celcurtemp)+" degree celsius")
