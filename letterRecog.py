@@ -10,4 +10,5 @@ pilImage = Image.open('diffTest3.jpg')
 
 print(pytesseract.image_to_string(pilImage))
 
-imgArray = np.array(pilImage.getdata(),np.uint8).reshape(pilImage.size[1], pilImage.size[0], 3)
+# imgArray = np.array(pilImage.getdata(),np.uint8).reshape(pilImage.size[1], pilImage.size[0], 3)
+imgArray = np.array(pilImage)
