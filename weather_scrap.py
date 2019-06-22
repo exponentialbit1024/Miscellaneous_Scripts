@@ -1,32 +1,18 @@
-from bs4 import BeautifulSoup
 import requests
-import re
+from bs4 import BeautifulSoup
 
-# url = 'http://www.accuweather.com/en/us/west-lafayette-in/47906/weather-forecast/2135952'
-url = 'http://www.accuweather.com/'
-urlwl = 'http://www.accuweather.com/en/us/west-lafayette-in/47906/current-weather/2135952'
-resp = requests.get(url)
-html = resp.text
-soup = BeautifulSoup(html, "lxml")
+page = requests.get("https://weather.com/en-IN/weather/today/l/af60f113ba123ce93774fed531be2e1e51a1666be5d6012f129cfa27bae1ee6c")
+soup = BeautifulSoup(page.content,"html.parser")
+other_card = soup.find("div", {"class" : "today_nowcard-sidecar component panel"}).find("table").find("tbody")
+extra_weather_attr = {
+    "wind" : "",
+    "humidity" : "",
+    "dew point" : "",
+    "pressure" : "",
+    "visibility" : ""
+}
+for item in other_card:
+    if item.find("th").text.lower() in extra_weather_attr.keys():
+        extra_weather_attr[item.find("th").text.lower()] = item.find("span").text
 
-wspans = soup.find_all('div', class_="temp")
-locspan = soup.find_all('div', class_="loc")
-curloc = locspan[0].text
-# for sp in spans:
-# 	print(sp)
-# 	print('\n')
-# print(spans)
-curtemp = wspans[0].text
-ftemp = re.findall('\d+',curtemp)[0]
-feeltemp = re.findall('\d+',curtemp)[1]
-
-celcurtemp = (int(ftemp) - 32) * 5 / 9
-
-respwl = requests.get(urlwl)
-htmlwl = respwl.text
-soupwl = BeautifulSoup(htmlwl, "lxml")
-wspans = soupwl.find_all('span', class_="cond")
-curw = wspans[0].text
-
-print("It is "+curw+" outside")
-print("The current temperature outside is "+str(celcurtemp)+" degree celsius")
+print(extra_weather_attr)
